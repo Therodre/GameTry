@@ -1,12 +1,15 @@
 import pygame
 from sys import exit
+from Game import settings
+from Game.tile import Tile
 
 
 class Game:
-    _WIDTH = 800
-    _HEIGHT = 400
+    _WIDTH = settings.WIDTH
+    _HEIGHT = settings.HEIGHT
 
     def __init__(self):
+        self.visible_sprite = pygame.sprite.Group()
         pass
 
     def run(self):
@@ -15,8 +18,12 @@ class Game:
         screen = pygame.display.set_mode((self._WIDTH, self._HEIGHT))
         clock = pygame.time.Clock()
         _width_surface, _height_surface = 20, 20
-        test_surface = pygame.Surface((_width_surface, _height_surface))
+        test_surface = pygame.Surface((settings.TILING, settings.TILING))
         test_surface.fill(color='Red')
+        for index_y, y in enumerate(settings.WORLD_MAP):
+            for index_x, x in enumerate(y):
+                if x == 'x':
+                    Tile((x, y), [self.visible_sprite])
 
         while True:
             # do a barrel roll
